@@ -22,7 +22,6 @@ allure {
 }
 
 repositories {
-    mavenLocal()
     jcenter()
     mavenCentral()
 }

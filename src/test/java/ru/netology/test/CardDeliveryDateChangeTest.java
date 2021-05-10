@@ -26,11 +26,6 @@ public class CardDeliveryDateChangeTest {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    @AfterAll
-    static void tearDownAll() {
-        SelenideLogger.removeListener("allure");
-    }
-
     @Test
     void shouldTestAnotherDate() {
         open("http://localhost:9999");
@@ -85,6 +80,11 @@ public class CardDeliveryDateChangeTest {
         $("[data-test-id='date'] input").setValue(dateNoCorrectDelivery);
         $(withText("Запланировать")).click();
         $("[data-test-id='date'] .input__sub").shouldBe(text("Заказ на выбранную дату невозможен"));
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
     }
 
 }
