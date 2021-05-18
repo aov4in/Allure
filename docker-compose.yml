@@ -111,7 +111,7 @@ services:
     #  -c max_worker_processes=4
     #  -c max_parallel_workers_per_gather=2
     #  -c max_parallel_workers=4
-      -c shared_buffers=4GB
+    # -c shared_buffers=4GB
     #  -c effective_cache_size=12GB
     #  -c maintenance_work_mem=1GB
     healthcheck:
