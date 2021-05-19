@@ -91,3 +91,18 @@ test {
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', true
 }
 ```
+
+9. Далее запускаем тесты через терминал с помощью команды:
+```
+gradlew clean test
+```
+10. Развернутая нами среда будет доступна по адресу 
+
+http://localhost:8080/  или  http://IP_ADDRESS:8080
+
+11. Для доступа необходимо использовать следующий логин\пароль:
+```
+default\1q2w3e
+or
+superadmin\erebus
+```
