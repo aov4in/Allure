@@ -4,6 +4,16 @@
 
 #### **Интеграция с Report Portal**
 
+Чтобы начать использовать Report Portal с JUnit 5, необходимо создать файл местоположения службы:
+
+1. Создайте папку /META-INF/services в ресурсах( ./src/test/resources )
+2. Поместите туда файл с именем org.junit.jupiter.api.extension.Extension
+3. Поместите ссылку на реализацию, по умолчанию в виде одной строки в файл: com.epam.reportportal.junit5.ReportPortalExtension
+Пример: /META-INF/services/org.junit.jupiter.api.extension.Extension
+   ```
+   com.epam.reportportal.junit5.ReportPortalExtension
+   ```
+
 Для интеграции проекта с Report Portal необходимо выполнить следующие действия:
 1. Открыть сайт https://reportportal.io/
 2. В верхнем меню сайта выбрать ["Install"](https://reportportal.io/installation)
@@ -54,7 +64,41 @@ docker-compose -p reportportal up -d --force-recreate
 
 ***docker ps -a | grep "reportportal_" | awk '{print $1}' | xargs docker rm -f*** - Удаляет все контейнеры ReportPortal.
 
-8. Перед запуском тестов так же необходимо произвести настройки build.gradle:
+8. Если при запуске возникает ошибка: 
+```
+ERROR: for db-scripts  Container "e3c7cff2ab6e" is unhealthy.
+
+ERROR: for api  Container "e3c7cff2ab6e" is unhealthy.
+ERROR: Encountered errors while bringing up the project.
+```
+Необходимо в файле docker-compose.yml внести изменения:
+
+а) Обновить версию docker-compose до актуальной.
+
+б) измените раздел depends_on, чтобы он содержал чистые списки (без дополнительных операторов условий, как это было в версии 2.x)
+
+```
+ ...
+  db-scripts:
+    image: reportportal/migrations:5.3.5
+    depends_on:
+      - postgres
+ ...     
+```
+
+```
+ ...
+ api:
+    image: reportportal/service-api:5.3.5
+    depends_on:
+      - rabbitmq
+      - gateway
+      - postgres
+ ...     
+```
+
+
+9. Перед запуском тестов так же необходимо произвести настройки build.gradle:
 
 ```
 test {
@@ -92,15 +136,15 @@ test {
 }
 ```
 
-9. Далее запускаем тесты через терминал с помощью команды:
+10. Далее запускаем тесты через терминал с помощью команды:
 ```
 gradlew clean test
 ```
-10. Развернутая нами среда будет доступна по адресу 
+11. Развернутая нами среда будет доступна по адресу 
 
 http://localhost:8080/  или  http://IP_ADDRESS:8080
 
-11. Для доступа необходимо использовать следующий логин\пароль:
+12. Для доступа необходимо использовать следующий логин\пароль:
 ```
 default\1q2w3e
 or
