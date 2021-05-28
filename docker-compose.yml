@@ -230,7 +230,7 @@ services:
      # For unix host
       - ./data/storage:/data
      # For windows host
-     # - minio:/data
+#      - minio:/data
     environment:
       MINIO_ACCESS_KEY: minio
       MINIO_SECRET_KEY: minio123
@@ -243,6 +243,6 @@ services:
     restart: always
 
 #   Docker volume for Windows host
-volumes:
-  postgres:
-  minio:
+#volumes:
+#  postgres:
+#  minio:
